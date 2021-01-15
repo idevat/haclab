@@ -23,9 +23,7 @@ export const ConstraintRowTicketSet = ({
         <>
           <DataListCell width={4}>
             {"Resources "}
-            <strong>
-              <ConstraintResourceSetRscLinks resourceSet={resourceSet} />
-            </strong>
+            <ConstraintResourceSetRscLinks resourceSet={resourceSet} />
             {" in role "}
             <strong>{resourceSet.role || "Started"}</strong>
             {" depends on ticket "}

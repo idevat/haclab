@@ -25,10 +25,8 @@ export const ConstraintRowOrderSet = ({
         <>
           <DataListCell width={4}>
             {"Resources "}
-            <strong>
-              <ConstraintResourceSetRscLinks resourceSet={resourceSet} />
-              {` ${resourceSet.action || "start"}`}
-            </strong>
+            <ConstraintResourceSetRscLinks resourceSet={resourceSet} />
+            <strong>{` ${resourceSet.action || "start"}`}</strong>
             {" in given order"}
           </DataListCell>
           <ConstraintCellOrderScoreKind

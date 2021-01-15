@@ -1,12 +1,12 @@
 import React from "react";
 import { DataListCell } from "@patternfly/react-core";
 
-import { location, types } from "app/store";
-import { Link, useSelectedClusterName } from "app/view";
+import { types } from "app/store";
 
 import {
   ConstraintCell,
   ConstraintCellFake,
+  ConstraintLink,
   ConstraintRow,
   ConstraintValue,
 } from "../common";
@@ -16,7 +16,6 @@ export const ConstraintRowTicketResource = ({
 }: {
   constraint: types.cluster.ConstraintTicketResource;
 }) => {
-  const clusterName = useSelectedClusterName();
   return (
     <ConstraintRow
       aria-labelledby={`Ticket constraint ${constraint.id}`}
@@ -25,14 +24,7 @@ export const ConstraintRowTicketResource = ({
           <ConstraintCell label="Type" value="Ticket" width={1} />
           <DataListCell width={3}>
             {"Resource "}
-            <strong>
-              <Link
-                to={location.resource({
-                  clusterName,
-                  resourceId: constraint.rsc,
-                })}
-              />
-            </strong>
+            <ConstraintLink type="resource" id={constraint.rsc} />
             {" in role "}
             <strong>{constraint["rsc-role"] || "Started"}</strong>
             {" depends on ticket "}

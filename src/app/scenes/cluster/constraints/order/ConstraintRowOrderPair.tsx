@@ -1,10 +1,14 @@
 import React from "react";
 import { DataListCell } from "@patternfly/react-core";
 
-import { location, types } from "app/store";
-import { Link, useSelectedClusterName } from "app/view";
+import { types } from "app/store";
 
-import { ConstraintCell, ConstraintRow, ConstraintValue } from "../common";
+import {
+  ConstraintCell,
+  ConstraintLink,
+  ConstraintRow,
+  ConstraintValue,
+} from "../common";
 
 import { ConstraintCellOrderScoreKind } from "./ConstraintCellOrderScoreKind";
 
@@ -13,7 +17,6 @@ export const ConstraintRowOrderPair = ({
 }: {
   constraint: types.cluster.ConstraintOrderPair;
 }) => {
-  const clusterName = useSelectedClusterName();
   return (
     <ConstraintRow
       id={constraint.id}
@@ -22,25 +25,13 @@ export const ConstraintRowOrderPair = ({
           <ConstraintCell label="Type" value="Order" width={1} />
           <DataListCell width={3}>
             {"Resource "}
-            <strong>
-              <Link
-                to={location.resource({
-                  clusterName,
-                  resourceId: constraint.first,
-                })}
-              />
-            </strong>
+            <ConstraintLink type="resource" id={constraint.first} />
             <strong>
               {` ${constraint["first-action"] || "start"}s before `}
             </strong>
             {"resource "}
+            <ConstraintLink type="resource" id={constraint.then} />
             <strong>
-              <Link
-                to={location.resource({
-                  clusterName,
-                  resourceId: constraint.then,
-                })}
-              />
               {` ${
                 constraint["then-action"]
                 || constraint["first-action"]

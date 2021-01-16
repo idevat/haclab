@@ -13,7 +13,7 @@ export const ConstraintResourceSetRscLinks: React.FC<{
         .map<React.ReactNode>(resourceId => (
           <ConstraintLink key={resourceId} type="resource" id={resourceId} />
         ))
-        .reduce((prev, curr) => [prev, " ", curr])}
+        .reduce((prev, curr) => [prev, ", ", curr])}
     </>
   );
 };

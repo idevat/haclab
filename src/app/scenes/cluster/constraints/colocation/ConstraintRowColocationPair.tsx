@@ -11,6 +11,8 @@ import {
   ConstraintValue,
 } from "../common";
 
+import { ConstraintRowColocationTogether } from "./ConstraintRowColocationTogether";
+
 export const ConstraintRowColocationPair = ({
   constraint,
 }: {
@@ -23,21 +25,17 @@ export const ConstraintRowColocationPair = ({
         <>
           <ConstraintCell label="Type" value="Colocation" width={1} />
           <DataListCell width={3}>
-            {"Resource "}
+            {"Resources "}
 
             <ConstraintLink type="resource" id={constraint.rsc} />
             <ConstraintResourceInRole role={constraint["rsc-role"]} />
 
-            {constraint.score === "INFINITY"
-            || (constraint.score
-              && typeof constraint.score === "number"
-              && constraint.score > 0)
-              ? " together with "
-              : " apart from "}
-            {" resource "}
+            {" and "}
 
             <ConstraintLink type="resource" id={constraint["with-rsc"]} />
             <ConstraintResourceInRole role={constraint["with-rsc-role"]} />
+
+            <ConstraintRowColocationTogether constraint={constraint} />
           </DataListCell>
 
           <ConstraintCell label="Score" value={constraint.score} width={1} />

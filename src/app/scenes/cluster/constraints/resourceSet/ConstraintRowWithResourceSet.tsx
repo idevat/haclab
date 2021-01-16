@@ -42,6 +42,7 @@ export const ConstraintRowWithResourceSet: React.FC<{
                 if ("id-ref" in resourceSet) {
                   return (
                     <DataListItem
+                      key={`${id}-${resourceSet["id-ref"]}`}
                       aria-labelledby={`${id}-${resourceSet["id-ref"]}`}
                     >
                       <DataListItemRow>

@@ -9,11 +9,11 @@ import {
   ConstraintRowWithResourceSet,
 } from "../resourceSet";
 
-export const ConstraintRowColocationSet = ({
-  constraint,
-}: {
+import { ConstraintRowColocationTogether } from "./ConstraintRowColocationTogether";
+
+export const ConstraintRowColocationSet: React.FC<{
   constraint: types.cluster.ConstraintColocationSet;
-}) => {
+}> = ({ constraint }) => {
   return (
     <ConstraintRowWithResourceSet
       id={constraint.id}
@@ -25,7 +25,7 @@ export const ConstraintRowColocationSet = ({
             {"Resources "}
             <ConstraintResourceSetRscLinks resourceSet={resourceSet} />
             <ConstraintResourceInRole role={resourceSet.role} />
-            {" together"}
+            <ConstraintRowColocationTogether constraint={constraint} />
           </DataListCell>
           <DataListCell width={1}>
             {"Score "}

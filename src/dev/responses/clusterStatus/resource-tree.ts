@@ -303,6 +303,24 @@ export const resourceTree: Cluster = cluster("resourceTree", "ok", {
           },
         ],
       },
+      {
+        id: "colocation-A-G1-INFINITY-3",
+        score: "-INFINITY",
+        sets: [
+          {
+            id: "rs-colocation-A-G1-INFINITY-3-1",
+            resources: ["A", "GROUP-1"],
+            sequential: "false",
+          },
+          {
+            id: "rs-colocation-A-G1-INFINITY-3-2",
+            resources: ["B", "C"],
+          },
+          {
+            "id-ref": "reused-rules",
+          },
+        ],
+      },
     ],
     rsc_location: [
       {

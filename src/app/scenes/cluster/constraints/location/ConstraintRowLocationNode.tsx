@@ -6,6 +6,7 @@ import { types } from "app/store";
 import {
   ConstraintCell,
   ConstraintLink,
+  ConstraintResourceInRole,
   ConstraintRow,
   ConstraintValue,
 } from "../common";
@@ -25,8 +26,7 @@ export const ConstraintRowLocationNode = ({
           <ConstraintCell label="Type" value="Location" width={1} />
           <DataListCell width={3}>
             <ConstraintLocationDescRscPoint constraint={constraint} />
-            {" in role "}
-            <strong>{constraint.role || "Started"}</strong>
+            <ConstraintResourceInRole role={constraint.role} />
             {" on node "}
             <ConstraintLink type="node" id={constraint.node} />
           </DataListCell>

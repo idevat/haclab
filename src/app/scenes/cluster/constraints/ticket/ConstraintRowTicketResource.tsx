@@ -7,6 +7,7 @@ import {
   ConstraintCell,
   ConstraintCellFake,
   ConstraintLink,
+  ConstraintResourceInRole,
   ConstraintRow,
   ConstraintValue,
 } from "../common";
@@ -25,8 +26,7 @@ export const ConstraintRowTicketResource = ({
           <DataListCell width={3}>
             {"Resource "}
             <ConstraintLink type="resource" id={constraint.rsc} />
-            {" in role "}
-            <strong>{constraint["rsc-role"] || "Started"}</strong>
+            <ConstraintResourceInRole role={constraint["rsc-role"]} />
             {" depends on ticket "}
             <strong>{constraint.ticket}</strong>
           </DataListCell>

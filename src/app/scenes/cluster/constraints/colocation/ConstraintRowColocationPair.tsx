@@ -6,6 +6,7 @@ import { types } from "app/store";
 import {
   ConstraintCell,
   ConstraintLink,
+  ConstraintResourceInRole,
   ConstraintRow,
   ConstraintValue,
 } from "../common";
@@ -23,9 +24,10 @@ export const ConstraintRowColocationPair = ({
           <ConstraintCell label="Type" value="Colocation" width={1} />
           <DataListCell width={3}>
             {"Resource "}
+
             <ConstraintLink type="resource" id={constraint.rsc} />
-            {" in role "}
-            <strong>{constraint["rsc-role"] || "Started"}</strong>
+            <ConstraintResourceInRole role={constraint["rsc-role"]} />
+
             {constraint.score === "INFINITY"
             || (constraint.score
               && typeof constraint.score === "number"
@@ -33,9 +35,9 @@ export const ConstraintRowColocationPair = ({
               ? " together with "
               : " apart from "}
             {" resource "}
+
             <ConstraintLink type="resource" id={constraint["with-rsc"]} />
-            {" in role "}
-            <strong>{constraint["with-rsc-role"] || "Started"}</strong>
+            <ConstraintResourceInRole role={constraint["with-rsc-role"]} />
           </DataListCell>
 
           <ConstraintCell label="Score" value={constraint.score} width={1} />

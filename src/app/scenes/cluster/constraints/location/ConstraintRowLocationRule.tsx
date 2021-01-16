@@ -6,6 +6,7 @@ import { types } from "app/store";
 import {
   ConstraintCell,
   ConstraintCellFake,
+  ConstraintResourceInRole,
   ConstraintRow,
   ConstraintValue,
 } from "../common";
@@ -40,8 +41,7 @@ export const ConstraintRowLocationRule = ({
             <>
               <DataListCell width={3}>
                 <ConstraintLocationDescRscPoint constraint={constraint} />
-                {" in role "}
-                <strong>{constraint.role || "Started"}</strong>
+                <ConstraintResourceInRole role={constraint.role} />
                 {" according to the rule "}
                 <strong>{constraint.rule_string}</strong>
               </DataListCell>

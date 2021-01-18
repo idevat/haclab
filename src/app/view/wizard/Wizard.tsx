@@ -6,17 +6,36 @@ import {
   WizardStep,
 } from "@patternfly/react-core";
 
+const DefaultWizardStep: React.FC = () => {
+  return <>DEFAULT WIZARD STEP</>;
+};
+
+type Step = WizardStep & { footer?: React.ReactNode };
+
+const defaultSteps: Step[] = [
+  {
+    name: "Default wizard step",
+    component: <DefaultWizardStep />,
+  },
+];
+
 export const Wizard: React.FC<{
   ["data-test"]: string;
-  steps: (WizardStep & { footer?: React.ReactNode })[];
+  steps?: Step[] | undefined;
   onClose: () => void;
   title: string;
   description: string;
-}> = ({ "data-test": dataTest, steps, onClose, title, description }) => {
+}> = ({
+  "data-test": dataTest,
+  onClose,
+  title,
+  description,
+  steps = undefined,
+}) => {
   const stepList: WizardStep[] = [];
   const footerList: { name: React.ReactNode; footer: React.ReactNode }[] = [];
 
-  steps.forEach((stepWithFooter) => {
+  (steps || defaultSteps).forEach((stepWithFooter) => {
     if ("footer" in stepWithFooter) {
       const { footer, ...pfStep } = stepWithFooter;
       footerList.push({ name: stepWithFooter.name, footer });

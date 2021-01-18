@@ -8,6 +8,9 @@ import resourceAgentMap, { ResourceAgentListService } from "./resourceAgentMap";
 import wizardResourceCreate, {
   WizardResourceCreate,
 } from "./wizardResourceCreate";
+import taskConstraintLocationCreate, {
+  TaskConstraintLocationCreate,
+} from "./taskConstraintLocationCreate";
 import wizardResourceGroup, {
   WizardResourceGroup,
 } from "./wizardResourceGroup";
@@ -20,6 +23,7 @@ export type ClusterStorageItem = {
   resourceTree: ResourceTreeState;
   clusterProperties: ClusterPropertiesService;
   resourceAgentMap: ResourceAgentListService;
+  taskConstraintLocationCreate: TaskConstraintLocationCreate;
   wizardResourceCreate: WizardResourceCreate;
   wizardResourceGroup: WizardResourceGroup;
   wizardNodeAdd: WizardNodeAdd;
@@ -35,6 +39,7 @@ const clusterStorageItem = combineReducers<ClusterStorageItem>({
   clusterProperties,
   resourceAgentMap,
   wizardResourceCreate,
+  taskConstraintLocationCreate,
   wizardResourceGroup,
   wizardNodeAdd,
   fixAuth,

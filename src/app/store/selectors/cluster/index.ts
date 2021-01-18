@@ -1,5 +1,8 @@
 import { clusterSelector } from "./selectorsHelpers";
 
+export const getTaskConstraintLocationCreateState = clusterSelector(
+  clusterStorageItem => clusterStorageItem.taskConstraintLocationCreate,
+);
 export const getWizardResourceCreateState = clusterSelector(
   clusterStorageItem => clusterStorageItem.wizardResourceCreate,
 );

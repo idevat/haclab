@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {
+  ActionList,
+  ActionListItem,
   Card,
   CardBody,
   PageSection,
@@ -11,12 +13,14 @@ import {
 
 import { selectors, types } from "app/store";
 import {
+  ClusterSectionToolbar,
   EmptyStateNoItem,
   ToolbarFilterAction,
   ToolbarFilterGroups,
 } from "app/view";
 
 import { ConstraintList } from "./ConstraintList";
+import { ConstraintCreateLocationToolbarItem } from "./task";
 
 type ConstraintPack = types.cluster.ConstraintPack;
 
@@ -64,40 +68,49 @@ export const ConstraintsPage: React.FC<{ clusterName: string }> = ({
     );
   };
   return (
-    <PageSection>
-      <Card>
-        <CardBody>
-          <Stack hasGutter>
-            {constraintPacks.length === 0 && (
-              <StackItem>
-                <EmptyStateNoItem
-                  title="No constraint is configured."
-                  message="You don't have any configured constraint here."
-                />
-              </StackItem>
-            )}
-            {constraintPacks.length !== 0 && (
-              <>
+    <>
+      <ClusterSectionToolbar>
+        <ActionList>
+          <ActionListItem>
+            <ConstraintCreateLocationToolbarItem />
+          </ActionListItem>
+        </ActionList>
+      </ClusterSectionToolbar>
+      <PageSection>
+        <Card>
+          <CardBody>
+            <Stack hasGutter>
+              {constraintPacks.length === 0 && (
                 <StackItem>
-                  <ToolbarFilterAction clearAllFilters={clearAllFilters}>
-                    <ToolbarItem>
-                      <ToolbarFilterGroups
-                        name="Constraint type"
-                        filterState={filterState.groupState}
-                      />
-                    </ToolbarItem>
-                  </ToolbarFilterAction>
-                </StackItem>
-                <StackItem>
-                  <ConstraintList
-                    constraintPacks={filterConstraintTypes(constraintPacks)}
+                  <EmptyStateNoItem
+                    title="No constraint is configured."
+                    message="You don't have any configured constraint here."
                   />
                 </StackItem>
-              </>
-            )}
-          </Stack>
-        </CardBody>
-      </Card>
-    </PageSection>
+              )}
+              {constraintPacks.length !== 0 && (
+                <>
+                  <StackItem>
+                    <ToolbarFilterAction clearAllFilters={clearAllFilters}>
+                      <ToolbarItem>
+                        <ToolbarFilterGroups
+                          name="Constraint type"
+                          filterState={filterState.groupState}
+                        />
+                      </ToolbarItem>
+                    </ToolbarFilterAction>
+                  </StackItem>
+                  <StackItem>
+                    <ConstraintList
+                      constraintPacks={filterConstraintTypes(constraintPacks)}
+                    />
+                  </StackItem>
+                </>
+              )}
+            </Stack>
+          </CardBody>
+        </Card>
+      </PageSection>
+    </>
   );
 };

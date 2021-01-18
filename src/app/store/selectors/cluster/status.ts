@@ -59,6 +59,10 @@ export const getGroups = clusterStatusSelector(clusterStatus =>
   }, []),
 );
 
+export const getNodeNameList = clusterStatusSelector(clusterStatus =>
+  clusterStatus.nodeList.map(node => node.name),
+);
+
 export const getTopLevelPrimitives = clusterStatusSelector(clusterStatus =>
   clusterStatus.resourceTree
     .filter(r => r.itemType === "primitive")

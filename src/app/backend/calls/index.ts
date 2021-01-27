@@ -20,3 +20,4 @@ export * from "./sendKnownHosts";
 export * from "./resourceClone";
 export * from "./resourceUnclone";
 export * from "./fixAuthOfCluster";
+export * from "./addConstraintRemote";

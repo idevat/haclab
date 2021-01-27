@@ -23,6 +23,7 @@ import * as resourceClone from "./resourceClone";
 import * as nodeAuth from "./nodeAuth";
 import * as fixAuth from "./fixAuth";
 import * as resourceGroupCreate from "./resourceGroupCreate";
+import * as constraints from "./constraints";
 
 function* rootSaga() {
   yield all([
@@ -40,6 +41,7 @@ function* rootSaga() {
     takeEvery("CLUSTER.ADD", addExistingCluster.addCluster),
     takeEvery("CLUSTER.FIX_AUTH.START", fixAuth.fixAuth),
     takeEvery("CLUSTER.FIX_AUTH.AUTH_DONE", fixAuth.fixAuthDistribute),
+    takeEvery("CONSTRAINT.LOCATION.CREATE", constraints.locationCreate),
     takeEvery("NODE.START", nodeStartStop.nodeStart),
     takeEvery("NODE.STOP", nodeStartStop.nodeStop),
     takeEvery("NODE.ADD.CHECK_CAN_ADD", nodeAdd.checkCanAddNodeSaga),

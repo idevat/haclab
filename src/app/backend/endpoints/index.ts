@@ -24,8 +24,10 @@ import { resourceRefresh } from "./resourceRefresh";
 import { resourceUnclone } from "./resourceUnclone";
 import { sendKnownHosts } from "./sendKnownHosts";
 import { updateResource } from "./updateResource";
+import { addConstraintRemote } from "./addConstraintRemote";
 
 const endpoints = {
+  addConstraintRemote,
   authGuiAgainstNodes,
   canAddClusterOrNodes,
   checkAuthAgainstNodes,

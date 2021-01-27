@@ -1,69 +1,53 @@
 import React from "react";
-import { Button, Form, Modal, SelectOption } from "@patternfly/react-core";
 
-import { FormText, Select } from "app/view";
+import { Wizard } from "app/view";
 
 import { useWizard } from "./useWizard";
+import {
+  ConstraintCreateLocationSelectType,
+  ConstraintCreateLocationSelectTypeFooter,
+} from "./step1SelectType";
+import {
+  ConstraintCreateLocationConfigure,
+  ConstraintCreateLocationConfigureFooter,
+} from "./step2Configure";
+import { ConstraintCreateLocationFinish } from "./finish";
+import {
+  ConstraintCreateLocationReview,
+  ConstraintCreateLocationReviewFooter,
+} from "./review";
 
 export const ConstraintCreateLocation: React.FC = () => {
-  const {
-    close,
-    updateState,
-    nodeNameList,
-    state: { score, node },
-  } = useWizard();
+  const { close } = useWizard();
 
-  const [nodeSearch, setNodeSearch] = React.useState("");
-  const actions = [
-    <Button
-      key="CreateLocation"
-      variant="primary"
-      onClick={() => {
-        console.log("Create Location");
-      }}
-    >
-      Create group
-    </Button>,
-    <Button key="Cancel" variant="link" onClick={close}>
-      Cancel
-    </Button>,
-  ];
   return (
-    <Modal
-      variant="medium"
-      title="New location"
-      isOpen
+    <Wizard
+      data-test="constraint-location-create"
       onClose={close}
-      actions={actions}
-      high={400}
-    >
-      <Form data-test="create-group">
-        <FormText
-          id="constraint-score"
-          label="Score"
-          onChange={value => updateState({ score: value })}
-          value={score}
-          helperTextInvalid="Please provide a group name"
-          isRequired
-          data-test="score"
-        />
-
-        <Select
-          variant="single"
-          typeAheadAriaLabel="Select a state"
-          onSelect={value => updateState({ node: value.toString() })}
-          onClear={() => updateState({ node: "" })}
-          onFilter={setNodeSearch}
-          selections={node}
-          placeholderText="Select a state"
-        >
-          {nodeNameList
-            .filter(nodeName => nodeName.includes(nodeSearch))
-            .map(nodeName => (
-              <SelectOption key={nodeName} value={nodeName} />
-            ))}
-        </Select>
-      </Form>
-    </Modal>
+      title="New location"
+      description="Creat new location constraint"
+      steps={[
+        {
+          name: "Select type",
+          component: <ConstraintCreateLocationSelectType />,
+          footer: <ConstraintCreateLocationSelectTypeFooter />,
+        },
+        {
+          name: "Prepare cluster for node",
+          component: <ConstraintCreateLocationConfigure />,
+          footer: <ConstraintCreateLocationConfigureFooter />,
+        },
+        {
+          name: "Review",
+          component: <ConstraintCreateLocationReview />,
+          footer: <ConstraintCreateLocationReviewFooter />,
+        },
+        {
+          name: "Result",
+          component: <ConstraintCreateLocationFinish />,
+          isFinishedStep: true,
+        },
+      ]}
+    />
   );
 };

@@ -4,7 +4,34 @@ export type LocationCreateActions = {
     key: { clusterName: string };
     payload: {
       score?: string;
-      node?: string;
+      nodeName?: string;
+      resourceId?: string;
     };
+  };
+
+  "CONSTRAINT.LOCATION.CREATE": {
+    type: "CONSTRAINT.LOCATION.CREATE";
+    key: { clusterName: string };
+    payload: {
+      resourceId: string;
+      nodeName: string;
+      score: string;
+    };
+  };
+
+  "CONSTRAINT.LOCATION.CREATE.OK": {
+    type: "CONSTRAINT.LOCATION.CREATE.OK";
+    key: { clusterName: string };
+  };
+
+  "CONSTRAINT.LOCATION.CREATE.FAIL": {
+    type: "CONSTRAINT.LOCATION.CREATE.FAIL";
+    key: { clusterName: string };
+    payload: { message: string };
+  };
+
+  "CONSTRAINT.LOCATION.CREATE.FAIL.RECOVER": {
+    type: "CONSTRAINT.LOCATION.CREATE.FAIL.RECOVER";
+    key: { clusterName: string };
   };
 };

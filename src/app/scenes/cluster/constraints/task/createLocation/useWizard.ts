@@ -7,13 +7,14 @@ export const useWizard = () => {
     selectors.getTaskConstraintLocationCreateState,
   );
 
-  const { clusterName, dispatch, state, wizard } = clusterWizard;
+  const { clusterName, dispatch, state, wizard, close } = clusterWizard;
   const [clusterStatus] = useClusterSelector(selectors.getCluster);
 
   return {
     ...clusterWizard,
     nodeNameList: clusterStatus.nodeList.map(n => n.name),
     resourceTree: clusterStatus.resourceTree,
+
     // actions
     updateState: (
       payload: ActionMap["CONSTRAINT.LOCATION.CREATE.UPDATE"]["payload"],
@@ -41,6 +42,14 @@ export const useWizard = () => {
         key: { clusterName },
       });
       wizard.goToStepByName("Select type");
+    },
+
+    close: () => {
+      close();
+      dispatch({
+        type: "CONSTRAINT.LOCATION.CREATE.CLOSE",
+        key: { clusterName },
+      });
     },
   };
 };

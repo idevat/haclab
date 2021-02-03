@@ -1,53 +1,67 @@
 import React from "react";
+import { Button, Modal } from "@patternfly/react-core";
 
-import { Wizard } from "app/view";
+import { EmptyStateSpinner, WizardFinishError, WizardSuccess } from "app/view";
 
 import { useWizard } from "./useWizard";
-import {
-  ConstraintCreateLocationSelectType,
-  ConstraintCreateLocationSelectTypeFooter,
-} from "./step1SelectType";
-import {
-  ConstraintCreateLocationConfigure,
-  ConstraintCreateLocationConfigureFooter,
-} from "./step2Configure";
-import { ConstraintCreateLocationFinish } from "./finish";
-import {
-  ConstraintCreateLocationReview,
-  ConstraintCreateLocationReviewFooter,
-} from "./review";
+import { ConstraintCreateLocationConfigure } from "./ConstraintCreateLocationConfigure";
 
 export const ConstraintCreateLocation: React.FC = () => {
-  const { close } = useWizard();
+  const {
+    close,
+    createLocation,
+    recoverFromError,
+    state: { response, resultMessage },
+  } = useWizard();
+
+  let actions = [
+    <Button key="CreateLocation" variant="primary" onClick={createLocation}>
+      Create location
+    </Button>,
+    <Button key="Cancel" variant="link" onClick={close}>
+      Cancel
+    </Button>,
+  ];
+
+  if (response === "fail") {
+    actions = [
+      <Button
+        key="recoverFromError"
+        variant="primary"
+        onClick={recoverFromError}
+      >
+        Start from the beginning
+      </Button>,
+      <Button key="tryAgain" variant="link" onClick={createLocation}>
+        Try again
+      </Button>,
+      <Button key="cancel" variant="link" onClick={close}>
+        Cancel
+      </Button>,
+    ];
+  }
 
   return (
-    <Wizard
-      data-test="constraint-location-create"
+    <Modal
+      variant="medium"
+      title="Create location constraint"
+      isOpen
       onClose={close}
-      title="New location"
-      description="Creat new location constraint"
-      steps={[
-        {
-          name: "Select type",
-          component: <ConstraintCreateLocationSelectType />,
-          footer: <ConstraintCreateLocationSelectTypeFooter />,
-        },
-        {
-          name: "Prepare cluster for node",
-          component: <ConstraintCreateLocationConfigure />,
-          footer: <ConstraintCreateLocationConfigureFooter />,
-        },
-        {
-          name: "Review",
-          component: <ConstraintCreateLocationReview />,
-          footer: <ConstraintCreateLocationReviewFooter />,
-        },
-        {
-          name: "Result",
-          component: <ConstraintCreateLocationFinish />,
-          isFinishedStep: true,
-        },
-      ]}
-    />
+      actions={actions}
+    >
+      {response === "" && <ConstraintCreateLocationConfigure />}
+      {response === "sending" && (
+        <EmptyStateSpinner title="Creating location constraint" />
+      )}
+      {response === "ok" && (
+        <WizardSuccess title={"Location created successfully"} />
+      )}
+      {response === "fail" && (
+        <WizardFinishError
+          title={"Create location constraint failed"}
+          message={resultMessage}
+        />
+      )}
+    </Modal>
   );
 };

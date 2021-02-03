@@ -34,4 +34,9 @@ export type LocationCreateActions = {
     type: "CONSTRAINT.LOCATION.CREATE.FAIL.RECOVER";
     key: { clusterName: string };
   };
+
+  "CONSTRAINT.LOCATION.CREATE.CLOSE": {
+    type: "CONSTRAINT.LOCATION.CREATE.CLOSE";
+    key: { clusterName: string };
+  };
 };

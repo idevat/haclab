@@ -3,7 +3,7 @@ import { Form, FormGroup, SelectOption } from "@patternfly/react-core";
 
 import { FormText, Select } from "app/view";
 
-import { useWizard } from "../useWizard";
+import { useWizard } from "./useWizard";
 
 export const ConstraintCreateLocationConfigure: React.FC = () => {
   const {

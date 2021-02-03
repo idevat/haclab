@@ -4,7 +4,7 @@ export type TaskConstraintLocationCreate = {
   resourceId: string;
   score: string;
   nodeName: string;
-  resultStatus: "" | "ok" | "fail";
+  response: "" | "sending" | "ok" | "fail";
   resultMessage: string;
 };
 
@@ -12,7 +12,7 @@ const initialState: TaskConstraintLocationCreate = {
   resourceId: "",
   score: "",
   nodeName: "",
-  resultStatus: "",
+  response: "",
   resultMessage: "",
 };
 
@@ -27,26 +27,36 @@ const taskConstraintLocationCreate: Reducer<TaskConstraintLocationCreate> = (
         ...action.payload,
       };
 
+    case "CONSTRAINT.LOCATION.CREATE":
+      return {
+        ...state,
+        response: "sending",
+        resultMessage: "",
+      };
+
     case "CONSTRAINT.LOCATION.CREATE.OK":
       return {
         ...state,
-        resultStatus: "ok",
+        response: "ok",
         resultMessage: "",
       };
 
     case "CONSTRAINT.LOCATION.CREATE.FAIL":
       return {
         ...state,
-        resultStatus: "fail",
+        response: "fail",
         resultMessage: action.payload.message,
       };
 
     case "CONSTRAINT.LOCATION.CREATE.FAIL.RECOVER":
       return {
         ...state,
-        resultStatus: "",
+        response: "",
         resultMessage: "",
       };
+
+    case "CONSTRAINT.LOCATION.CREATE.CLOSE":
+      return initialState;
 
     default:
       return state;

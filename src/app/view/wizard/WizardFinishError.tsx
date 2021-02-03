@@ -13,9 +13,14 @@ import * as pallete from "app/view/pallete";
 export const WizardFinishError: React.FC<{
   title: React.ReactNode;
   message: React.ReactNode;
-  primaryActions: React.ReactNode;
-  secondaryActions: React.ReactNode;
-}> = ({ title, message, primaryActions, secondaryActions }) => {
+  primaryActions?: React.ReactNode;
+  secondaryActions?: React.ReactNode;
+}> = ({
+  title,
+  message,
+  primaryActions = undefined,
+  secondaryActions = undefined,
+}) => {
   return (
     <EmptyState>
       <EmptyStateIcon icon={ExclamationCircleIcon} color={pallete.ERROR} />

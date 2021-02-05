@@ -30,7 +30,11 @@ export const useWizard = () => {
         type: "CONSTRAINT.LOCATION.CREATE",
         key: { clusterName },
         payload: {
-          resourceId: state.resourceId,
+          resourceSpecification: state.resourceSpecification,
+          resourceValue:
+            state.resourceSpecification === "pattern"
+              ? state.resourcePattern
+              : state.resourceId,
           nodeName: state.nodeName,
           score: state.score,
         },

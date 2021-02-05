@@ -15,27 +15,32 @@ export const ConstraintCreateLocationFinish: React.FC = () => {
     case "sending":
       return <EmptyStateSpinner title="Creating location constraint" />;
     case "ok":
-      return <WizardSuccess title={"Location created successfully"} />;
+      return (
+        <WizardSuccess
+          title={"Location created successfully"}
+          primaryActions={
+            <Button variant="primary" onClick={close}>
+              Close
+            </Button>
+          }
+        />
+      );
     default:
       return (
         <WizardFinishError
           title={"Create location constraint failed"}
           message={resultMessage}
           primaryActions={
-            <Button
-              key="recoverFromError"
-              variant="primary"
-              onClick={recoverFromError}
-            >
+            <Button variant="primary" onClick={recoverFromError}>
               Start from the beginning
             </Button>
           }
           secondaryActions={
             <>
-              <Button key="tryAgain" variant="link" onClick={createLocation}>
+              <Button variant="link" onClick={createLocation}>
                 Try again
               </Button>
-              <Button key="cancel" variant="link" onClick={close}>
+              <Button variant="link" onClick={close}>
                 Cancel
               </Button>
             </>

@@ -4,7 +4,14 @@ import { Button } from "@patternfly/react-core";
 import { useWizard } from "./useWizard";
 
 export const ConstraintCreateLocationFooter: React.FC = () => {
-  const { close, createLocation } = useWizard();
+  const {
+    close,
+    createLocation,
+    state: { response },
+  } = useWizard();
+  if (response !== "") {
+    return null;
+  }
   return (
     <>
       <Button key="CreateLocation" variant="primary" onClick={createLocation}>

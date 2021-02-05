@@ -1,17 +1,7 @@
 import React from "react";
-import {
-  Checkbox,
-  Flex,
-  FlexItem,
-  FormGroup,
-  Radio,
-  SelectOption,
-  SelectVariant,
-  Stack,
-  StackItem,
-} from "@patternfly/react-core";
+import { Checkbox, Flex, FlexItem, FormGroup } from "@patternfly/react-core";
 
-import { FormText, Select } from "app/view";
+import { FormSelectOrText } from "app/view";
 
 import { useWizard } from "../useWizard";
 
@@ -52,62 +42,30 @@ export const ResourceCreateSettingsGroup: React.FC = () => {
       {useGroup !== "no" && (
         <FlexItem>
           <FormGroup fieldId="settings-group-existing">
-            <Stack hasGutter>
-              <StackItem>
-                <Radio
-                  isChecked={useGroup === "existing"}
-                  name="use-group-existing"
-                  onChange={checked =>
-                    updateState({
-                      useGroup: checked ? "existing" : "new",
-                      ...(checked ? { group: groupList[0] } : {}),
-                    })
-                  }
-                  label="Select existing group"
-                  id="settings-group-existing"
-                />
-                {useGroup === "existing" && (
-                  <Select
-                    variant={SelectVariant.single}
-                    placeholderText=""
-                    aria-label="Existing"
-                    onSelect={(value: string) =>
-                      updateState({ group: value.toString() })
-                    }
-                    selections={groupList.includes(group) ? group : ""}
-                    isDisabled={!useGroup}
-                  >
-                    {groupList.map(g => (
-                      <SelectOption key={g} value={g} />
-                    ))}
-                  </Select>
-                )}
-              </StackItem>
-              <StackItem>
-                <Radio
-                  isChecked={useGroup === "new"}
-                  name="use-group-new"
-                  onChange={checked =>
-                    updateState({
-                      useGroup: checked ? "new" : "existing",
-                      ...(checked ? { group: "" } : {}),
-                    })
-                  }
-                  label="Create new group"
-                  id="settings-group-new"
-                />
-                {useGroup === "new" && (
-                  <FormText
-                    id="new-group-name"
-                    value={group}
-                    isRequired
-                    onChange={(value: string) => updateState({ group: value })}
-                    helperTextInvalid="Please provide a name for the new group"
-                    validated={newGroupValidated}
-                  />
-                )}
-              </StackItem>
-            </Stack>
+            <FormSelectOrText
+              id="settings-group"
+              checked={useGroup === "existing" ? "select" : "text"}
+              onChange={checked =>
+                updateState({
+                  useGroup: checked === "select" ? "existing" : "new",
+                  group: checked === "select" ? groupList[0] : "",
+                })
+              }
+              select={{
+                label: "Select existing group",
+                selections: groupList.includes(group) ? group : "",
+                isDisabled: !useGroup,
+                optionsValues: groupList,
+                onSelect: value => updateState({ group: value.toString() }),
+              }}
+              text={{
+                label: "Create new group",
+                value: group,
+                onChange: value => updateState({ group: value }),
+                helperTextInvalid: "Please provide a name for the new group",
+                validated: newGroupValidated,
+              }}
+            />
           </FormGroup>
         </FlexItem>
       )}

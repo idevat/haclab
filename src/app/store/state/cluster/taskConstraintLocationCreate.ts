@@ -1,7 +1,9 @@
 import { Reducer } from "app/store/redux";
 
 export type TaskConstraintLocationCreate = {
+  resourceSpecification: "resource" | "pattern";
   resourceId: string;
+  resourcePattern: string;
   score: string;
   nodeName: string;
   response: "" | "sending" | "ok" | "fail";
@@ -9,7 +11,9 @@ export type TaskConstraintLocationCreate = {
 };
 
 const initialState: TaskConstraintLocationCreate = {
+  resourceSpecification: "resource",
   resourceId: "",
+  resourcePattern: "",
   score: "",
   nodeName: "",
   response: "",

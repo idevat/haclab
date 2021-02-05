@@ -4,14 +4,15 @@ import { api, put } from "app/store/sagas/common";
 
 export function* locationCreate({
   key,
-  payload: { resourceId, nodeName, score },
+  payload: { resourceSpecification, resourceValue, nodeName, score },
 }: ActionMap["CONSTRAINT.LOCATION.CREATE"]) {
   const result: api.ResultOf<typeof addConstraintRemote> = yield api.authSafe(
     addConstraintRemote,
     key.clusterName,
     {
       location: {
-        resourceId,
+        resourceSpecification,
+        resourceValue,
         nodeName,
         score,
       },

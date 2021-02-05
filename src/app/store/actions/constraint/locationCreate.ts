@@ -1,11 +1,14 @@
+type ResourceSpecification = "resource" | "pattern";
 export type LocationCreateActions = {
   "CONSTRAINT.LOCATION.CREATE.UPDATE": {
     type: "CONSTRAINT.LOCATION.CREATE.UPDATE";
     key: { clusterName: string };
     payload: {
       score?: string;
-      nodeName?: string;
+      resourceSpecification?: ResourceSpecification;
       resourceId?: string;
+      resourcePattern?: string;
+      nodeName?: string;
     };
   };
 
@@ -13,7 +16,8 @@ export type LocationCreateActions = {
     type: "CONSTRAINT.LOCATION.CREATE";
     key: { clusterName: string };
     payload: {
-      resourceId: string;
+      resourceSpecification: ResourceSpecification;
+      resourceValue: string;
       nodeName: string;
       score: string;
     };

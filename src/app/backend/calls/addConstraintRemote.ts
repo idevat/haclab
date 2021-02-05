@@ -6,7 +6,8 @@ export const addConstraintRemote = async (
   clusterName: string,
   constraint: {
     location: {
-      resourceId: string;
+      resourceSpecification: "resource" | "pattern";
+      resourceValue: string;
       nodeName: string;
       score: string;
       force?: boolean;
@@ -17,12 +18,24 @@ export const addConstraintRemote = async (
     "force" in constraint.location && constraint.location.force === true
       ? [["force", "true"]]
       : [];
+
+  const {
+    resourceSpecification,
+    resourceValue,
+    nodeName,
+    score,
+  } = constraint.location;
   return http.post(url({ clusterName }), {
     params: [
       ["c_type", "loc"],
-      ["res_id", constraint.location.resourceId],
-      ["node_id", constraint.location.nodeName],
-      ["score", constraint.location.score],
+      [
+        "res_id",
+        resourceSpecification === "pattern"
+          ? `regexp%${resourceValue}`
+          : resourceValue,
+      ],
+      ["node_id", nodeName],
+      ["score", score],
       ...force,
     ],
   });

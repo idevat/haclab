@@ -8,6 +8,7 @@ export type TaskConstraintLocationCreate = {
   nodeName: string;
   rule: string;
   response: "" | "sending" | "ok" | "fail";
+  preference: "prefer" | "avoid";
   score: string;
   resultMessage: string;
 };
@@ -19,6 +20,7 @@ const initialState: TaskConstraintLocationCreate = {
   locationSpecification: "node",
   nodeName: "",
   rule: "",
+  preference: "prefer",
   score: "",
   response: "",
   resultMessage: "",

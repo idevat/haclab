@@ -38,7 +38,7 @@ export const useWizard = () => {
           locationSpecification: state.locationSpecification,
           nodeName: state.nodeName,
           rule: state.rule,
-          score: state.score,
+          score: `${state.preference === "prefer" ? "" : "-"}${state.score}`,
         },
       }),
 

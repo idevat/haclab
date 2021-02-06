@@ -1,5 +1,6 @@
 type ResourceSpecification = "resource" | "pattern";
 type LocationSpecification = "node" | "rule";
+type LocationPreference = "prefer" | "avoid";
 
 export type LocationCreateActions = {
   "CONSTRAINT.LOCATION.CREATE.UPDATE": {
@@ -12,6 +13,7 @@ export type LocationCreateActions = {
       resourcePattern?: string;
       locationSpecification?: LocationSpecification;
       nodeName?: string;
+      preference?: LocationPreference;
       rule?: string;
     };
   };

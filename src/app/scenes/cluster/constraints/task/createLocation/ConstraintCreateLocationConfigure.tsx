@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormGroup } from "@patternfly/react-core";
+import { Flex, FlexItem, Form, FormGroup, Radio } from "@patternfly/react-core";
 
 import { FormSelectOrText, FormText } from "app/view";
 
@@ -17,6 +17,7 @@ export const ConstraintCreateLocationConfigure: React.FC = () => {
       locationSpecification,
       nodeName,
       rule,
+      preference,
       score,
     },
   } = useWizard();
@@ -91,6 +92,37 @@ export const ConstraintCreateLocationConfigure: React.FC = () => {
             "data-test": "rule",
           }}
         />
+      </FormGroup>
+
+      <FormGroup
+        label="Preference"
+        isRequired
+        fieldId="constraint-location-create-preference"
+      >
+        <Flex>
+          <FlexItem>
+            <Radio
+              isChecked={preference === "prefer"}
+              name="preference-prefer"
+              onChange={isChecked =>
+                updateState({ preference: isChecked ? "prefer" : "avoid" })
+              }
+              label="Prefer"
+              id="preference-prefer"
+            />
+          </FlexItem>
+          <FlexItem>
+            <Radio
+              isChecked={preference === "avoid"}
+              name="preference-avoid"
+              onChange={isChecked =>
+                updateState({ preference: isChecked ? "avoid" : "prefer" })
+              }
+              label="Avoid"
+              id="preference-avoid"
+            />
+          </FlexItem>
+        </Flex>
       </FormGroup>
 
       <FormText

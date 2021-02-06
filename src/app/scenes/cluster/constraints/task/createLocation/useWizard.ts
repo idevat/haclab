@@ -35,7 +35,9 @@ export const useWizard = () => {
             state.resourceSpecification === "pattern"
               ? state.resourcePattern
               : state.resourceId,
+          locationSpecification: state.locationSpecification,
           nodeName: state.nodeName,
+          rule: state.rule,
           score: state.score,
         },
       }),

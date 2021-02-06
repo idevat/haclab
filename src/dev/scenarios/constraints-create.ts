@@ -15,3 +15,15 @@ app.addConstraintRemote((req, res) => {
 
   return [400, ""];
 });
+
+app.addConstraintRuleRemote((req, res) => {
+  if (req.body.score > 100) {
+    res
+      .status(400)
+      .send("Error adding constraint: Error: something wrong in pcs command");
+    return;
+  }
+  res.send("Successfully added constraint");
+
+  return [400, ""];
+});

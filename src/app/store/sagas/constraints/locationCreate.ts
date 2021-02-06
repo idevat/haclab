@@ -1,23 +1,38 @@
-import { addConstraintRemote } from "app/backend";
+import { addConstraintRemote, addConstraintRuleRemote } from "app/backend";
 import { ActionMap } from "app/store";
 import { api, put } from "app/store/sagas/common";
 
 export function* locationCreate({
   key,
-  payload: { resourceSpecification, resourceValue, nodeName, score },
+  payload: {
+    resourceSpecification,
+    resourceValue,
+    locationSpecification,
+    nodeName,
+    rule,
+    score,
+  },
 }: ActionMap["CONSTRAINT.LOCATION.CREATE"]) {
-  const result: api.ResultOf<typeof addConstraintRemote> = yield api.authSafe(
-    addConstraintRemote,
-    key.clusterName,
-    {
-      location: {
-        resourceSpecification,
-        resourceValue,
-        nodeName,
-        score,
-      },
-    },
-  );
+  const backendCall =
+    locationSpecification === "node"
+      ? api.authSafe(addConstraintRemote, key.clusterName, {
+          location: {
+            resourceSpecification,
+            resourceValue,
+            nodeName,
+            score,
+          },
+        })
+      : api.authSafe(addConstraintRuleRemote, key.clusterName, {
+          location: {
+            resourceSpecification,
+            resourceValue,
+            rule,
+            score,
+          },
+        });
+
+  const result: api.ResultOf<typeof addConstraintRemote> = yield backendCall;
 
   if (result.type === "OK") {
     yield put({

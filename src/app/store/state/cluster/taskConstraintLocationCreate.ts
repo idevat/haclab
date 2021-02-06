@@ -4,9 +4,11 @@ export type TaskConstraintLocationCreate = {
   resourceSpecification: "resource" | "pattern";
   resourceId: string;
   resourcePattern: string;
-  score: string;
+  locationSpecification: "node" | "rule";
   nodeName: string;
+  rule: string;
   response: "" | "sending" | "ok" | "fail";
+  score: string;
   resultMessage: string;
 };
 
@@ -14,8 +16,10 @@ const initialState: TaskConstraintLocationCreate = {
   resourceSpecification: "resource",
   resourceId: "",
   resourcePattern: "",
-  score: "",
+  locationSpecification: "node",
   nodeName: "",
+  rule: "",
+  score: "",
   response: "",
   resultMessage: "",
 };

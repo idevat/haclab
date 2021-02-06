@@ -1,7 +1,7 @@
 import React from "react";
-import { Form, FormGroup, SelectOption } from "@patternfly/react-core";
+import { Form, FormGroup } from "@patternfly/react-core";
 
-import { FormSelectOrText, FormText, Select } from "app/view";
+import { FormSelectOrText, FormText } from "app/view";
 
 import { useWizard } from "./useWizard";
 
@@ -14,7 +14,9 @@ export const ConstraintCreateLocationConfigure: React.FC = () => {
       resourceSpecification,
       resourceId,
       resourcePattern,
+      locationSpecification,
       nodeName,
+      rule,
       score,
     },
   } = useWizard();
@@ -67,18 +69,28 @@ export const ConstraintCreateLocationConfigure: React.FC = () => {
         isRequired
         fieldId="constraint-location-create-node"
       >
-        <Select
-          variant="single"
-          typeAheadAriaLabel="Select a node"
-          onSelect={value => updateState({ nodeName: value.toString() })}
-          onClear={() => updateState({ nodeName: "" })}
-          selections={nodeName}
-          placeholderText="Select a node"
-        >
-          {nodeNameList.map(nodeName => (
-            <SelectOption key={nodeName} value={nodeName} />
-          ))}
-        </Select>
+        <FormSelectOrText
+          id="constraint-location-create-location"
+          checked={locationSpecification === "node" ? "select" : "text"}
+          onChange={checked =>
+            updateState({
+              locationSpecification: checked === "select" ? "node" : "rule",
+            })
+          }
+          select={{
+            label: "Select a node",
+            selections: nodeName,
+            optionsValues: nodeNameList,
+            onSelect: value => updateState({ nodeName: value.toString() }),
+          }}
+          text={{
+            label: "Type rule",
+            value: rule,
+            onChange: value => updateState({ rule: value }),
+            helperTextInvalid: "Please provide rule",
+            "data-test": "rule",
+          }}
+        />
       </FormGroup>
 
       <FormText

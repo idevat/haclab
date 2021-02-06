@@ -21,3 +21,4 @@ export * from "./resourceClone";
 export * from "./resourceUnclone";
 export * from "./fixAuthOfCluster";
 export * from "./addConstraintRemote";
+export * from "./addConstraintRuleRemote";

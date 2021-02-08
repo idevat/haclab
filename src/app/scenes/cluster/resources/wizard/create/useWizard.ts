@@ -12,10 +12,7 @@ const useAgent = (clusterName: string, agentName: string) => {
 };
 
 export const useWizard = () => {
-  const clusterWizard = useClusterWizard(
-    "resource-create",
-    selectors.getWizardResourceCreateState,
-  );
+  const clusterWizard = useClusterWizard("wizardResourceCreate");
   const { clusterName, state, dispatch } = clusterWizard;
   const [groupList] = useClusterSelector(selectors.getGroups);
   const { agent, isAgentLoaded } = useAgent(clusterName, state.agentName);

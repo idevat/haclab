@@ -1,13 +1,10 @@
 import React from "react";
 
-import { ActionMap, selectors } from "app/store";
+import { ActionMap } from "app/store";
 import { useClusterState, useClusterWizard } from "app/view";
 
 export const useWizard = () => {
-  const clusterWizard = useClusterWizard(
-    "node-add",
-    selectors.getWizardNodeAddState,
-  );
+  const clusterWizard = useClusterWizard("wizardNodeAdd");
   const { clusterName, state, dispatch } = clusterWizard;
 
   const { clusterState } = useClusterState(clusterName);

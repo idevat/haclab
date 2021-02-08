@@ -1,20 +1,12 @@
+import { types } from "app/store/state";
+
 import { clusterSelector } from "./selectorsHelpers";
 
-export const getTaskConstraintLocationCreateState = clusterSelector(
-  clusterStorageItem => clusterStorageItem.taskConstraintLocationCreate,
-);
-export const getWizardResourceCreateState = clusterSelector(
-  clusterStorageItem => clusterStorageItem.wizardResourceCreate,
-);
-export const getWizardResourceGroupState = clusterSelector(
-  clusterStorageItem => clusterStorageItem.wizardResourceGroup,
-);
-export const getWizardNodeAddState = clusterSelector(
-  clusterStorageItem => clusterStorageItem.wizardNodeAdd,
-);
-export const getFixAuth = clusterSelector(
-  clusterStorageItem => clusterStorageItem.fixAuth,
-);
+export function getClusterPart<
+  NAME extends keyof types.clusterStorage.ClusterStorageItem,
+>(name: NAME) {
+  return clusterSelector(clusterStorageItem => clusterStorageItem[name]);
+}
 
 export const getPcmkAgent = clusterSelector(
   (clusterStorageItem, agentName: string) =>

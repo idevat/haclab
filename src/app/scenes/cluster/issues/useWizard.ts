@@ -6,7 +6,7 @@ export const useWizard = () => {
   const [
     { authProcessId, open, fixing, errorMessage, authAttemptInProgress },
     clusterName,
-  ] = useClusterSelector(selectors.getFixAuth);
+  ] = useClusterSelector(selectors.getClusterPart("fixAuth"));
   return {
     open,
     fixing,

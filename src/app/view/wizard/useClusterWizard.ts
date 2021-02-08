@@ -1,25 +1,21 @@
 import React from "react";
-import { DefaultRootState } from "react-redux";
 import { WizardContext } from "@patternfly/react-core";
 
-import { useDispatch } from "app/store";
+import { selectors, useDispatch } from "app/store";
+import { types } from "app/store/state";
 import { useWizardOpenClose } from "app/view";
 import { useClusterSelector } from "app/view/useClusterSelector";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function useClusterWizard<
-  A extends any[],
-  S extends DefaultRootState,
-  R,
->(
-  wizardKey: string,
-  selector: (clusterName: string, ...selectorArgs: A) => (state: S) => R,
-  ...args: A
-) {
-  const [state, clusterName] = useClusterSelector(selector, ...args);
+  NAME extends keyof types.clusterStorage.ClusterStorageItem,
+>(clusterPartName: NAME) {
+  const [state, clusterName] = useClusterSelector(
+    selectors.getClusterPart(clusterPartName),
+  );
   const dispatch = useDispatch();
-  const openClose = useWizardOpenClose(wizardKey);
+  const openClose = useWizardOpenClose(clusterPartName);
   const pfWizardContext = React.useContext(WizardContext);
 
   return {

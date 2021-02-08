@@ -2,10 +2,7 @@ import { ActionMap, selectors } from "app/store";
 import { useClusterSelector, useClusterWizard } from "app/view";
 
 export const useWizard = () => {
-  const clusterWizard = useClusterWizard(
-    "constraint-location-create",
-    selectors.getTaskConstraintLocationCreateState,
-  );
+  const clusterWizard = useClusterWizard("taskConstraintLocationCreate");
 
   const { clusterName, dispatch, state, wizard, close } = clusterWizard;
   const [clusterStatus] = useClusterSelector(selectors.getCluster);

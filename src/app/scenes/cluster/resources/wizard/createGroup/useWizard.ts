@@ -2,10 +2,7 @@ import { ActionMap, selectors } from "app/store";
 import { useClusterSelector, useClusterWizard } from "app/view";
 
 export const useWizard = () => {
-  const clusterWizard = useClusterWizard(
-    "resource-group",
-    selectors.getWizardResourceGroupState,
-  );
+  const clusterWizard = useClusterWizard("wizardResourceGroup");
 
   const { clusterName, dispatch } = clusterWizard;
   const [topLevelPrimitives] = useClusterSelector(

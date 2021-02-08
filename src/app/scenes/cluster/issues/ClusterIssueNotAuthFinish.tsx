@@ -2,14 +2,16 @@ import React from "react";
 import { Alert } from "@patternfly/react-core";
 
 import { EmptyStateSpinner } from "app/view";
-import { useClusterSelector } from "app/view/useClusterSelector";
-import { selectors } from "app/store";
+
+import { useWizard } from "./useWizard";
 
 export const ClusterIssueNotAuthFinish: React.FC = () => {
-  const [{ fixing, errorMessage }] = useClusterSelector(selectors.getFixAuth);
+  const { fixing, errorMessage } = useWizard();
+
   if (fixing) {
-    <EmptyStateSpinner title="Distributing auth tokens to cluster" />;
+    return <EmptyStateSpinner title="Distributing auth tokens to cluster" />;
   }
+
   if (errorMessage.length > 0) {
     return (
       <Alert

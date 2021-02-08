@@ -10,7 +10,20 @@ export const useWizard = () => {
   return {
     ...clusterWizard,
     nodeNameList: clusterStatus.nodeList.map(n => n.name),
-    resourceTree: clusterStatus.resourceTree,
+    resourceIdList: clusterStatus.resourceTree.reduce<string[]>(
+      (idList, resource) => {
+        if (resource.itemType === "primitive") {
+          return [...idList, resource.id];
+        }
+
+        if (resource.itemType === "group") {
+          return [...idList, resource.id, ...resource.resources.map(r => r.id)];
+        }
+
+        return idList;
+      },
+      [],
+    ),
 
     // actions
     updateState: (

@@ -9,7 +9,7 @@ export const ConstraintCreateLocationConfigure: React.FC = () => {
   const {
     updateState,
     nodeNameList,
-    resourceTree,
+    resourceIdList,
     state: {
       resourceSpecification,
       resourceId,
@@ -22,17 +22,6 @@ export const ConstraintCreateLocationConfigure: React.FC = () => {
     },
   } = useWizard();
 
-  const resourceIdList = resourceTree.reduce<string[]>((idList, resource) => {
-    if (resource.itemType === "primitive") {
-      return [...idList, resource.id];
-    }
-
-    if (resource.itemType === "group") {
-      return [...idList, resource.id, ...resource.resources.map(r => r.id)];
-    }
-
-    return idList;
-  }, []);
   return (
     <Form data-test="create-location-constrait">
       <FormGroup

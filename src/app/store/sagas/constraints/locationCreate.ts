@@ -50,3 +50,38 @@ export function* locationCreate({
     },
   });
 }
+
+export function* orderCreate({
+  key,
+  payload: { resourceId, action, order, otherResourceId, otherAction },
+}: ActionMap["CONSTRAINT.ORDER.CREATE"]) {
+  const result: api.ResultOf<typeof addConstraintRemote> = yield api.authSafe(
+    addConstraintRemote,
+    key.clusterName,
+    {
+      order: {
+        resourceId,
+        action,
+        order,
+        otherResourceId,
+        otherAction,
+      },
+    },
+  );
+
+  if (result.type === "OK") {
+    yield put({
+      type: "CONSTRAINT.ORDER.CREATE.OK",
+      key,
+    });
+    return;
+  }
+
+  yield put({
+    type: "CONSTRAINT.ORDER.CREATE.FAIL",
+    key,
+    payload: {
+      message: result.type === "UNAUTHORIZED" ? "Unauthorized" : result.text,
+    },
+  });
+}

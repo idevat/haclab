@@ -20,7 +20,10 @@ import {
 } from "app/view";
 
 import { ConstraintList } from "./ConstraintList";
-import { ConstraintCreateLocationToolbarItem } from "./task";
+import {
+  ConstraintCreateLocationToolbarItem,
+  ConstraintCreateOrderToolbarItem,
+} from "./task";
 
 type ConstraintPack = types.cluster.ConstraintPack;
 
@@ -73,6 +76,9 @@ export const ConstraintsPage: React.FC<{ clusterName: string }> = ({
         <ActionList>
           <ActionListItem>
             <ConstraintCreateLocationToolbarItem />
+          </ActionListItem>
+          <ActionListItem>
+            <ConstraintCreateOrderToolbarItem />
           </ActionListItem>
         </ActionList>
       </ClusterSectionToolbar>

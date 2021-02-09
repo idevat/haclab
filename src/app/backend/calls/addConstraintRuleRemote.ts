@@ -5,17 +5,17 @@ const { url } = endpoints.addConstraintRuleRemote;
 export const addConstraintRuleRemote = async (
   clusterName: string,
   constraint: {
+    force?: boolean;
     location: {
       resourceSpecification: "resource" | "pattern";
       resourceValue: string;
       rule: string;
       score: string;
-      force?: boolean;
     };
   },
 ): api.CallResult => {
   const force: [string, string][] =
-    "force" in constraint.location && constraint.location.force === true
+    "force" in constraint && constraint.force === true
       ? [["force", "true"]]
       : [];
 

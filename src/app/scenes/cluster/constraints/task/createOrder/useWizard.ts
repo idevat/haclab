@@ -2,14 +2,12 @@ import { ActionMap, selectors } from "app/store";
 import { useClusterSelector, useClusterWizard } from "app/view";
 
 export const useWizard = () => {
-  const clusterWizard = useClusterWizard("taskConstraintLocationCreate");
-
+  const clusterWizard = useClusterWizard("taskConstraintOrderCreate");
   const { clusterName, dispatch, state, close } = clusterWizard;
   const [clusterStatus] = useClusterSelector(selectors.getCluster);
 
   return {
     ...clusterWizard,
-    nodeNameList: clusterStatus.nodeList.map(n => n.name),
     resourceIdList: clusterStatus.resourceTree.reduce<string[]>(
       (idList, resource) => {
         if (resource.itemType === "primitive") {
@@ -25,36 +23,32 @@ export const useWizard = () => {
       [],
     ),
 
-    // actions
+    //actions
     updateState: (
-      payload: ActionMap["CONSTRAINT.LOCATION.CREATE.UPDATE"]["payload"],
+      payload: ActionMap["CONSTRAINT.ORDER.CREATE.UPDATE"]["payload"],
     ) =>
       dispatch({
-        type: "CONSTRAINT.LOCATION.CREATE.UPDATE",
+        type: "CONSTRAINT.ORDER.CREATE.UPDATE",
         key: { clusterName },
         payload,
       }),
 
-    createLocation: () =>
+    createOrder: () =>
       dispatch({
-        type: "CONSTRAINT.LOCATION.CREATE",
+        type: "CONSTRAINT.ORDER.CREATE",
         key: { clusterName },
         payload: {
-          resourceSpecification: state.resourceSpecification,
-          resourceValue:
-            state.resourceSpecification === "pattern"
-              ? state.resourcePattern
-              : state.resourceId,
-          locationSpecification: state.locationSpecification,
-          nodeName: state.nodeName,
-          rule: state.rule,
-          score: `${state.preference === "prefer" ? "" : "-"}${state.score}`,
+          resourceId: state.resourceId,
+          action: state.action,
+          order: state.order,
+          otherResourceId: state.otherResourceId,
+          otherAction: state.otherAction,
         },
       }),
 
     recoverFromError: () => {
       dispatch({
-        type: "CONSTRAINT.LOCATION.CREATE.FAIL.RECOVER",
+        type: "CONSTRAINT.ORDER.CREATE.FAIL.RECOVER",
         key: { clusterName },
       });
     },
@@ -62,7 +56,7 @@ export const useWizard = () => {
     close: () => {
       close();
       dispatch({
-        type: "CONSTRAINT.LOCATION.CREATE.CLOSE",
+        type: "CONSTRAINT.ORDER.CREATE.CLOSE",
         key: { clusterName },
       });
     },

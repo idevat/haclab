@@ -3,10 +3,10 @@ import { Button } from "@patternfly/react-core";
 
 import { useWizard } from "./useWizard";
 
-export const ConstraintCreateLocationFooter: React.FC = () => {
+export const ConstraintCreateOrderFooter: React.FC = () => {
   const {
     close,
-    createLocation,
+    createOrder,
     state: { response },
   } = useWizard();
   if (response !== "") {
@@ -14,8 +14,8 @@ export const ConstraintCreateLocationFooter: React.FC = () => {
   }
   return (
     <>
-      <Button variant="primary" onClick={createLocation}>
-        Create location
+      <Button variant="primary" onClick={createOrder}>
+        Create order
       </Button>
       <Button variant="link" onClick={close}>
         Cancel

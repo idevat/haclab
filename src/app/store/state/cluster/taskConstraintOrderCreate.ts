@@ -2,21 +2,19 @@ import { Reducer } from "app/store/redux";
 
 type Action = "start" | "promote" | "demote" | "stop";
 export type TaskConstraintOrderCreate = {
-  resourceId: string;
-  action: Action;
-  order: "before" | "after";
-  otherResourceId: string;
-  otherAction: Action;
+  firstResourceId: string;
+  firstAction: Action;
+  thenResourceId: string;
+  thenAction: Action;
   response: "" | "sending" | "ok" | "fail";
   resultMessage: string;
 };
 
 const initialState: TaskConstraintOrderCreate = {
-  resourceId: "",
-  action: "start",
-  order: "after",
-  otherResourceId: "",
-  otherAction: "start",
+  firstResourceId: "",
+  firstAction: "start",
+  thenResourceId: "",
+  thenAction: "start",
   response: "",
   resultMessage: "",
 };
@@ -58,6 +56,15 @@ const taskConstraintOrderCreate: Reducer<TaskConstraintOrderCreate> = (
         ...state,
         response: "",
         resultMessage: "",
+      };
+
+    case "CONSTRAINT.ORDER.CREATE.SWAP_RESOURCES":
+      return {
+        ...state,
+        firstResourceId: state.thenResourceId,
+        firstAction: state.thenAction,
+        thenResourceId: state.firstResourceId,
+        thenAction: state.firstAction,
       };
 
     case "CONSTRAINT.ORDER.CREATE.CLOSE":

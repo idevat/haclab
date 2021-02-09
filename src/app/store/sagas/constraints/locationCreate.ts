@@ -53,18 +53,18 @@ export function* locationCreate({
 
 export function* orderCreate({
   key,
-  payload: { resourceId, action, order, otherResourceId, otherAction },
+  payload: { firstResourceId, firstAction, thenResourceId, thenAction },
 }: ActionMap["CONSTRAINT.ORDER.CREATE"]) {
   const result: api.ResultOf<typeof addConstraintRemote> = yield api.authSafe(
     addConstraintRemote,
     key.clusterName,
     {
       order: {
-        resourceId,
-        action,
-        order,
-        otherResourceId,
-        otherAction,
+        resourceId: firstResourceId,
+        action: firstAction,
+        order: "after",
+        otherResourceId: thenResourceId,
+        otherAction: thenAction,
       },
     },
   );

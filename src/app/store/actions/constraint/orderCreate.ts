@@ -1,27 +1,29 @@
 type Action = "start" | "promote" | "demote" | "stop";
-type Order = "after" | "before";
 export type OrderCreateActions = {
   "CONSTRAINT.ORDER.CREATE.UPDATE": {
     type: "CONSTRAINT.ORDER.CREATE.UPDATE";
     key: { clusterName: string };
     payload: {
-      resourceId?: string;
-      action?: Action;
-      order?: Order;
-      otherResourceId?: string;
-      otherAction?: Action;
+      firstResourceId?: string;
+      firstAction?: Action;
+      thenResourceId?: string;
+      thenAction?: Action;
     };
+  };
+
+  "CONSTRAINT.ORDER.CREATE.SWAP_RESOURCES": {
+    type: "CONSTRAINT.ORDER.CREATE.SWAP_RESOURCES";
+    key: { clusterName: string };
   };
 
   "CONSTRAINT.ORDER.CREATE": {
     type: "CONSTRAINT.ORDER.CREATE";
     key: { clusterName: string };
     payload: {
-      resourceId: string;
-      action: Action;
-      order: Order;
-      otherResourceId: string;
-      otherAction: Action;
+      firstResourceId: string;
+      firstAction: Action;
+      thenResourceId: string;
+      thenAction: Action;
     };
   };
 

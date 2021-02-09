@@ -11,6 +11,7 @@ import { FormRadioGroup, Select } from "app/view";
 type Action = "start" | "stop" | "promote" | "demote";
 export const ConstraintCreateOrderResourceAction: React.FC<{
   id: string;
+  label: string;
   resource: {
     onChange: (value: string) => void;
     value: string;
@@ -20,9 +21,9 @@ export const ConstraintCreateOrderResourceAction: React.FC<{
     onChange: (value: Action) => void;
     value: Action;
   };
-}> = ({ id, resource, action }) => {
+}> = ({ id, resource, action, label }) => {
   return (
-    <FormGroup label="Resource action" isRequired fieldId={id}>
+    <FormGroup label={label} fieldId={id}>
       <Flex>
         <FlexItem>
           <Select

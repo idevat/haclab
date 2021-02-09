@@ -38,11 +38,10 @@ export const useWizard = () => {
         type: "CONSTRAINT.ORDER.CREATE",
         key: { clusterName },
         payload: {
-          resourceId: state.resourceId,
-          action: state.action,
-          order: state.order,
-          otherResourceId: state.otherResourceId,
-          otherAction: state.otherAction,
+          firstResourceId: state.firstResourceId,
+          firstAction: state.firstAction,
+          thenResourceId: state.thenResourceId,
+          thenAction: state.thenAction,
         },
       }),
 
@@ -60,5 +59,11 @@ export const useWizard = () => {
         key: { clusterName },
       });
     },
+
+    swapResources: () =>
+      dispatch({
+        type: "CONSTRAINT.ORDER.CREATE.SWAP_RESOURCES",
+        key: { clusterName },
+      }),
   };
 };

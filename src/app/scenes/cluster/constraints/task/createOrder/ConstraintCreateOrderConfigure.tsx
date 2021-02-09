@@ -1,56 +1,81 @@
 import React from "react";
-import { Form, FormGroup } from "@patternfly/react-core";
+import { Form, SelectOption } from "@patternfly/react-core";
+import { ArrowDownIcon, ArrowUpIcon } from "@patternfly/react-icons";
 
-import { FormRadioGroup } from "app/view";
+import { FormRadioGroup, Select } from "app/view";
 
 import { useWizard } from "./useWizard";
-import { ConstraintCreateOrderResourceAction } from "./ConstraintCreateOrderResourceAction";
 
 export const ConstraintCreateOrderConfigure: React.FC = () => {
   const {
     resourceIdList,
     updateState,
-    state: { resourceId, action, order, otherResourceId, otherAction },
+    swapResources,
+    state: { firstResourceId, firstAction, thenResourceId, thenAction },
   } = useWizard();
 
   return (
-    <Form data-test="create-order-constrait">
-      <ConstraintCreateOrderResourceAction
-        id="constraint-order-resource"
-        resource={{
-          onChange: value => updateState({ resourceId: value }),
-          value: resourceId,
-          list: resourceIdList.filter(r => r !== otherResourceId),
-        }}
-        action={{
-          onChange: value => updateState({ action: value }),
-          value: action,
-        }}
-      />
-      <FormGroup
-        label="Order"
-        isRequired
-        fieldId="constraint-order-create-action"
-      >
-        <FormRadioGroup
-          id="constraint-order-action"
-          options={["after", "before"]}
-          selected={order}
-          onChange={value => updateState({ order: value })}
-        />
-      </FormGroup>
-      <ConstraintCreateOrderResourceAction
-        id="constraint-order-other-resource"
-        resource={{
-          onChange: value => updateState({ otherResourceId: value }),
-          value: otherResourceId,
-          list: resourceIdList.filter(r => r !== resourceId),
-        }}
-        action={{
-          onChange: value => updateState({ otherAction: value }),
-          value: otherAction,
-        }}
-      />
+    <Form data-test="create-order-constrait" isHorizontal>
+      <table>
+        <tbody>
+          <tr>
+            <th>First resource</th>
+            <td>
+              <Select
+                variant="single"
+                onSelect={value => updateState({ firstResourceId: value })}
+                selections={firstResourceId}
+                placeholderText="Select resource"
+              >
+                {resourceIdList
+                  .filter(r => r !== thenResourceId)
+                  .map(o => (
+                    <SelectOption key={o} value={o} />
+                  ))}
+              </Select>
+            </td>
+            <td>
+              <FormRadioGroup
+                id={"constraint-order-first-resource-action"}
+                options={["start", "stop", "promote", "demote"]}
+                selected={firstAction}
+                onChange={value => updateState({ firstAction: value })}
+              />
+            </td>
+            <td>
+              <ArrowDownIcon onClick={swapResources} />
+            </td>
+          </tr>
+          <tr>
+            <th>Next resource</th>
+            <td>
+              <Select
+                variant="single"
+                onSelect={value => updateState({ thenResourceId: value })}
+                selections={thenResourceId}
+                placeholderText="Select resource"
+              >
+                {resourceIdList
+                  .filter(r => r !== firstResourceId)
+                  .map(o => (
+                    <SelectOption key={o} value={o} />
+                  ))}
+              </Select>
+            </td>
+            <td>
+              <FormRadioGroup
+                id={"constraint-order-then-resource-action"}
+                options={["start", "stop", "promote", "demote"]}
+                selected={thenAction}
+                onChange={value => updateState({ thenAction: value })}
+              />
+            </td>
+            <td>
+              <ArrowUpIcon onClick={swapResources} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </Form>
   );
 };

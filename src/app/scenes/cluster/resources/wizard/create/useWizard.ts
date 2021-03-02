@@ -53,5 +53,18 @@ export const useWizard = () => {
         payload,
       });
     },
+
+    create: ({ force }: { force: boolean }) =>
+      dispatch({
+        type: "RESOURCE.CREATE",
+        key: { clusterName },
+        payload: {
+          agentName: state.agentName,
+          resourceName: state.resourceName,
+          instanceAttrs: state.instanceAttrs,
+          disabled: state.disabled,
+          force,
+        },
+      }),
   };
 };

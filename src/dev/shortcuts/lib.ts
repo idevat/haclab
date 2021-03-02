@@ -48,6 +48,21 @@ const getLibResponses = (res: Response): Record<string, () => void> => ({
       ]),
     );
   },
+  force: () => {
+    res.json(
+      response.lib.error([
+        {
+          severity: { level: "ERROR", force_code: "FORCE_OPTIONS" },
+          message: {
+            code: "DEFAULT_FORCIBLE_ERROR",
+            message: "Default forcible error from devel server",
+            payload: { error: "default" },
+          },
+          context: null,
+        },
+      ]),
+    );
+  },
   success: () => {
     res.json(response.lib.success);
   },

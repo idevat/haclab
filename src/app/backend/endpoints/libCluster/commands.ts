@@ -23,7 +23,14 @@ export type LibClusterCommands = {
     operation_list: Record<string, string>[];
     meta_attributes: Record<string, string>;
     instance_attributes: Record<string, string>;
+    allow_absent_agent?: boolean;
+    allow_invalid_operation?: boolean;
+    allow_invalid_instance_attributes?: boolean;
+    use_default_operations?: boolean;
     ensure_disabled: boolean;
+    allow_not_suitable_command?: boolean;
+
+    wait?: boolean;
   };
   "node-standby-unstandby": {
     standby: boolean;

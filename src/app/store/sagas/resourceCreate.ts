@@ -4,7 +4,7 @@ import { api, lib, processError, put, race, take } from "./common";
 
 export function* resourceCreateSaga({
   key,
-  payload: { agentName, resourceName, instanceAttrs, disabled },
+  payload: { agentName, resourceName, instanceAttrs, disabled, force },
 }: ActionMap["RESOURCE.CREATE"]) {
   const { result }: { result: api.ResultOf<typeof api.lib.call> } = yield race({
     result: api.authSafe(api.lib.callCluster, {
@@ -17,6 +17,10 @@ export function* resourceCreateSaga({
         ensure_disabled: disabled,
         operation_list: [],
         meta_attributes: {},
+        allow_absent_agent: force,
+        allow_invalid_operation: force,
+        allow_invalid_instance_attributes: force,
+        allow_not_suitable_command: force,
       },
     }),
     cancel: take("RESOURCE.CREATE.CLOSE"),

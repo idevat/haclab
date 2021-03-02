@@ -9,6 +9,7 @@ export type ResourceCreateActions = {
       agentName: string;
       instanceAttrs: Record<string, string>;
       disabled: boolean;
+      force: boolean;
     };
   };
 
